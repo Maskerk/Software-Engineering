@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <fstream>
-
+#include <string>
 //参考资料
 //http://blog.csdn.net/mafuli007/article/details/7314917
 //http://www.cnblogs.com/luxiaoxun/archive/2012/08/03/2621803.html
