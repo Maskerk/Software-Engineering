@@ -103,10 +103,11 @@ void build()
 
 
     }
-
-    arr_write(FileName,global_arr);
-    now_N++;
-
+    if(global_arr[0][0] == 8)//学号判断
+    {
+        arr_write(FileName,global_arr);
+        now_N++;
+    }
 }
 
 
