@@ -135,8 +135,10 @@ void my_rank(int depth1,int *rand_arr)
         new_A[i] = rand_arr[i];
     }
     //放置 i
-    for(int i = 1;i < 10;i++)
+    //for(int i = 1;i < 10;i++)
+    for(int i = 8;i > -1 ;i--)
     {
+        if(i == 0)  i = 9;
         if(depth == 0)
         {
             new_A[0] = i;
@@ -163,7 +165,7 @@ void my_rank(int depth1,int *rand_arr)
             new_A[j] = i;
             my_rank(depth+1,new_A);
         }
-
+        if(i == 9)  break;
     }
 
 }
