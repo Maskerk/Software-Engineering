@@ -46,6 +46,29 @@ int main()
 	// for(iter=num_index.begin();iter != num_index.end();iter++)
 	// 	cout<<iter->first<<"   "<<iter->second<<endl;
 	//去除
+	for(iter=num_index.begin();iter != num_index.end();iter++)
+	{
+		result += iter->first;
+
+		//左右重建
+		if(iter->second == 0)
+		{
+			(iter+1)->first -= arr_b[iter->second];
+			arr_b[iter->second] = -1;
+		}
+		else if(iter->second == n - 1)
+		{
+
+		}
+		else
+		{
+
+		}
+
+
+		//剔除
+		num_index.erase(iter);
+	}
 	for(i = 0;i < n;i++)
 	{
 		result += num_index.begin()->first;
@@ -58,7 +81,8 @@ int main()
 				if(iter->second == i + 1)
 				{
 					iter->first -= arr_b[num_index.begin()->second];
-					break;
+					arr_a[num_index.begin()->second] = -1;
+					//arr_b[num_index.begin()->second] = -1;
 				}
 			}
 		}
@@ -68,7 +92,18 @@ int main()
 		}
 		else
 		{
-
+			
+			if(arr_a[iter->second + 1] != -1)
+			{
+				iter->first -= arr_b[(iter+1)->second];
+				arr_a[iter.second] = -1;
+			}
+			if(arr_a[iter->second - 1] != -1)
+			{
+				iter->first -= arr_b[(iter-1)->second];
+				arr_a[iter.second] = -1;
+			}
+			
 		}
 		//剔除
 		num_index.erase(num_index.begin());
