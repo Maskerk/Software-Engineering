@@ -9,7 +9,7 @@ unsigned long result = 0;
 int main()
 {
 	int i;
-	map<unsigned long,unsigned long>::iterator iter;
+	multimap<unsigned long,unsigned long>::iterator iter;
 	cin >> n;
 	unsigned long arr_a[200],arr_b[200];
 	//input
@@ -23,8 +23,7 @@ int main()
 	for(i = n;i > 0;i--)
 	{
 		int j = 0;
-		iter = num_index.end();
-		--iter;
+		iter = --num_index.end();
 		result += arr_a[iter->second];
 
 		if(int(iter->second) - 1 >= 0)
