@@ -46,72 +46,101 @@ int main()
 	// for(iter=num_index.begin();iter != num_index.end();iter++)
 	// 	cout<<iter->first<<"   "<<iter->second<<endl;
 	//去除
-	for(iter=num_index.begin();iter != num_index.end();iter++)
-	{
-		result += iter->first;
-
-		//左右重建
-		if(iter->second == 0)
-		{
-			(iter+1)->first -= arr_b[iter->second];
-			arr_b[iter->second] = -1;
-		}
-		else if(iter->second == n - 1)
-		{
-
-		}
-		else
-		{
-
-		}
-
-
-		//剔除
-		num_index.erase(iter);
-	}
-	for(i = 0;i < n;i++)
+	// for(iter=num_index.begin();iter != num_index.end();iter++)
+	while(num_index.begin() != num_index.end())
 	{
 		result += num_index.begin()->first;
-		
-		//左右重建
-		if(i == 0)
+
+		//前边那个减去
+		//num_index.begin()->first -= num_index.begin()->second - 1;
+		//判断　-1
+		int pre_pos = num_index.begin()->second - 1;
+		while(arr_b[pre_pos] == -1 && pre_pos > 0)
+		{
+			pre_pos--;
+		}
+		if(arr_b[pre_pos] != -1)
 		{
 			for(iter = num_index.begin();iter != num_index.end();iter++)
 			{
-				if(iter->second == i + 1)
+				
+				if(iter->second == pre_pos)
 				{
-					iter->first -= arr_b[num_index.begin()->second];
-					arr_a[num_index.begin()->second] = -1;
-					//arr_b[num_index.begin()->second] = -1;
+					// iter->first -= arr_b[ num_index.begin()->second ];/////////////////////
+					num_index.insert(pair<unsigned long,int>(iter->first - arr_b[pre_pos],iter->second));
+					num_index.erase(iter);
+					//判断　+1
+					//iter.first += arr_b[num_index.begin()->second + 1];
+
+					//arr_b[num_index.begin()->second] = - 1;
 				}
 			}
 		}
-		else if(i == n - 1)
+		
+		//后边那个减去
+		int aft_pos = num_index.begin()->second + 1;
+		while(arr_b[aft_pos] == -1 && aft_pos < n)
 		{
+			aft_pos++;
+		}
+		if(arr_b[aft_pos] != -1)
+		{
+			for(iter = num_index.begin();iter != num_index.end();iter++)
+			{
+				
+				if(iter->second == aft_pos)
+				{
+					// iter->first -= arr_b[num_index.begin()->second];///////////////////////
+					num_index.insert(pair<unsigned long,int>(iter->first - arr_b[aft_pos],iter->second));
+					num_index.erase(iter);
+					//判断　+1
+					//iter.first += arr_b[num_index.begin()->second + 1];
 
-		}
-		else
-		{
-			
-			if(arr_a[iter->second + 1] != -1)
-			{
-				iter->first -= arr_b[(iter+1)->second];
-				arr_a[iter.second] = -1;
+					//arr_b[num_index.begin()->second] = - 1;
+				}
 			}
-			if(arr_a[iter->second - 1] != -1)
-			{
-				iter->first -= arr_b[(iter-1)->second];
-				arr_a[iter.second] = -1;
-			}
-			
 		}
+		
+
+		//arr_b 置-1
+		arr_b[num_index.begin()->second] = -1;
+
 		//剔除
 		num_index.erase(num_index.begin());
+
+		//前边的加上后边
+		if(arr_b[pre_pos] != -1 && arr_b[aft_pos] != -1)	
+		{
+			for(iter = num_index.begin();iter != num_index.end();iter++)
+			{
+				if(iter->second == pre_pos)
+				{
+					// iter->first += arr_b[aft_pos];//////////////////////////////////////
+					num_index.insert(pair<unsigned long,int>(iter->first + arr_b[aft_pos],iter->second));
+					num_index.erase(iter);
+				}
+			}
+		}
+		//后边那个加上前边
+		if(arr_b[pre_pos] != -1 && arr_b[aft_pos] != -1)
+		{
+			for(iter = num_index.begin();iter != num_index.end();iter++)
+			{
+				if(iter->second == aft_pos)
+				{
+					//iter->first = iter->first+arr_b[pre_pos];//////////////////////////
+					num_index.insert(pair<unsigned long,int>(iter->first + arr_b[pre_pos],iter->second));
+					num_index.erase(iter);
+					//num_index.insert(pair<unsigned long,int>(num_sum[i],i));
+				}
+			}
+		}
+
 	}
-	//output
-	map<unsigned long,int>::iterator iter;
-	for(iter=num_index.begin();iter != num_index.end();iter++)
-		cout<<iter->first<<"   "<<iter->second<<endl;
+
+	cout << result << endl;
+
+	// 	 
 
 	return 0;
 }
