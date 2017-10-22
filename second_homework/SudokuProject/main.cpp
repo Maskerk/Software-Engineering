@@ -2,12 +2,10 @@
 #include <stdlib.h>
 #include <fstream>
 #include <string>
-//参考资料
-//http://blog.csdn.net/mafuli007/article/details/7314917
-//http://www.cnblogs.com/luxiaoxun/archive/2012/08/03/2621803.html
-
 using namespace std;
 
+// 在生成数独矩阵时，左上角的第一个数为：（学号后两位相加）% 9 + 1
+// 例如：学生A学号后2位是80，则该数字为（8+0）% 9 + 1 = 9
 
 int N=0,now_N = 0;
 int A[9];
@@ -103,11 +101,11 @@ void build()
 
 
     }
-    if(global_arr[0][0] == 8)//学号判断
-    {
+     if(global_arr[0][0] == 7)//学号判断
+     {
         arr_write(FileName,global_arr);
         now_N++;
-    }
+     }
 }
 
 
@@ -136,12 +134,13 @@ void my_rank(int depth1,int *rand_arr)
     }
     //放置 i
     //for(int i = 1;i < 10;i++)
-    for(int i = 8;i > -1 ;i--)
+    //for(int i = 8;i > -1 ;i--)
+    for(int i = 1;i < 10;i++)
     {
-        if(i == 0)  i = 9;
+
         if(depth == 0)
         {
-            new_A[0] = i;
+            new_A[0] = 7;//修改学号位置
             my_rank(depth+1,new_A);
         }
         else
@@ -165,7 +164,6 @@ void my_rank(int depth1,int *rand_arr)
             new_A[j] = i;
             my_rank(depth+1,new_A);
         }
-        if(i == 9)  break;
     }
 
 }
@@ -182,8 +180,8 @@ int main(int argc, char *argv[])
     else
     {
         N++;
-        if(N -1 < 0 || N -1  > 362880)
-            cout << "对不起，输入数据超出范围！ " << endl;
+        if(N -1 < 0 || N -1  > 40320)
+            cout << "对不起，最大尽可输出40320个数独，输入数据超出范围！ " << endl;
         else
             my_rank(0,A);
     }
