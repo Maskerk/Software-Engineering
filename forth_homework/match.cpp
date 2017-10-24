@@ -201,6 +201,8 @@ void set_Department()
 		//创建该部门对象
 
 		part[i] = new Department(name_part,top_limit,tag,routine);
+		tag.clear();
+		routine.clear();
 	}
 	
 }
@@ -239,7 +241,6 @@ void set_Student()
 			interest.push_back(str);
 		}
 
-
 		cout << "请输入第" << i << "个学生的空闲时间段个数：" << endl;
 		cin >> num_free_time;
 		for(j = 0;j < num_free_time;j++)
@@ -251,6 +252,10 @@ void set_Student()
 
 		//创建该对象
 		stu[i] = new Student(id,grade,interest,sdt_dpt,free_time);
+
+		interest.clear();
+		sdt_dpt.clear();
+		free_time.clear();
 
 	}
 
@@ -273,51 +278,35 @@ void matchFree()
 		free_time = stu[i]->getFreeTime();
 
 		//判断是否所有空余时间片段有没有对任意一个部门的所有例会都不适合的 有的话就排除该部门意愿
-		//for(j = 0;j < num_sdt_dpt;j++)//意愿部门个数循环
-		//{
-			//具体意愿部门例会时间个数循环 
 
-			vector<string>::iterator iter;
-			vector<string>::iterator iter2;
-			vector<string>::iterator iter3;
-			for(iter = sdt_dpt->begin();iter != sdt_dpt->end();iter++)
+		vector<string>::iterator iter;
+		vector<string>::iterator iter2;
+		vector<string>::iterator iter3;
+		for(iter = sdt_dpt->begin();iter != sdt_dpt->end();iter++)
+		{
+			for(k = 0;k < N_department;k++)
 			{
-				for(k = 0;k < N_department;k++)
+				
+				if(*iter == part[i]->getParName())//如果意愿部门就是该部门
 				{
-					
-					if(*iter == part[i]->getParName())//如果意愿部门就是该部门
+					routine = part[i]->getRoutine();
+					//查询空余时间是否包含该部门所有例会时间
+					for(iter3 = routine.begin();iter3 != routine.end();iter3++)//例会时间片段
 					{
-						routine = part[i]->getRoutine();
-						//查询空余时间是否包含该部门所有例会时间
-						for(iter3 = routine.begin();iter3 != routine.end();iter3++)//例会时间片段
+						iter2 = find(free_time.begin(),free_time.end(),*iter3);
+						if(iter2 != free_time.end())//在空余时间段中
 						{
-							iter2 = find(free_time.begin(),free_time.end(),*iter3);
-							if(iter2 != free_time.end())//在空余时间段中
-							{
-								continue;//检查下一个例会片段
-							}
-							else//不在空余时间段中  排除该志愿
-							{
-								sdt_dpt->erase(iter);
-							}
+							continue;//检查下一个例会片段
+						}
+						else//不在空余时间段中  排除该志愿
+						{
+							sdt_dpt->erase(iter);
 						}
 					}
 				}
 			}
+		}
 	}
-
-
-	//查询该部门是不是达到上限
-	//查询该学生意愿是不是超出
-
-	//如果成立就加入该部门
-
-	//查看学生申报的部门是不是
-
-	//
-	//
-
-
 
 }
 
@@ -374,6 +363,7 @@ int main()
 	set_Department();//部门信息录入
 	set_Student();//学生信息录入
 	matchFree();
+	byGrade();
 	outputDepartment();
 	return 0;
 }
