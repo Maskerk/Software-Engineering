@@ -5,11 +5,10 @@
 #include <algorithm>
 #include <fstream>
 
+using namespace std;
 
 #define N_department 20
 #define N_student 300
-
-using namespace std;
 
 void departRandom()
 {
@@ -46,7 +45,6 @@ void departRandom()
 				else	vec_interest.push_back(label_interest[random]);
 			}
 			
-			
 		}
 		num_free = rand() % 12;//0~11个常规活动时间
 		for(i = 0;i < num_free;i++)
@@ -65,11 +63,8 @@ void departRandom()
 				}
 				else	vec_routine.push_back(route);
 			}
-			
-
 		}
 		//输出到文件部门信息
-
 
 		out << name_part << '\n';
 		out << top_limit << '\n';
@@ -131,9 +126,7 @@ void studentRandom()
 					//continue;
 				}
 				else	vec_will_part.push_back(will_part[random]);
-			}
-			
-			// 
+			} 
 
 		}
 		num_interest = rand() % 5;//随机5个兴趣标签
@@ -171,8 +164,6 @@ void studentRandom()
 			}
 			
 		}	
-		
-		//else	out.open("student_input.txt",std::ofstream::app);
 
 		out << id << '\n';
 		out << grade << '\n';
@@ -197,10 +188,7 @@ void studentRandom()
 
 	}
 	out.close();
-	
 }
-
-
 
 int main()
 {
@@ -208,7 +196,4 @@ int main()
 	studentRandom();
 	departRandom();
 	return 0;
-
-	//departRandom();
-	//cout << rand() % 16 << "  ";
 }
