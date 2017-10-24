@@ -3,6 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include <map>
+#include <fstream>  
 
 using namespace std;
 
@@ -171,30 +172,31 @@ void set_Department()
 	string str;
 	string name_part;
 	int j;
-
+	ifstream in;
+	char buffer[256]; 
+	in.open("department_input.txt");
 	for(int i = 0;i < N_department;i++)
 	{
-		cout << "请输入第" << i << "个部门的部门名称：" << endl;
-		cin >> name_part;
-		cout << "请输入第" << i << "个部门需要学生数要求的上限：" << endl;
-		cin >> top_limit;
-		cout << "请输入第" << i << "个有几个特点标签：" << endl;
-		cin >> num_tag;
-
+		in.getline(buffer,100);
+		name_part =  buffer;
+		//cout << name_part << endl;
+		in.getline(buffer,100);  
+		top_limit = atoi(buffer);
+		in.getline(buffer,100);  
+		num_tag = atoi(buffer);
 		for(j = 0;j < num_tag;j++)
 		{
-			cout << "请输入第" << i << "个部门第" << j << "个兴趣标签：" << endl;
-			cin >> str;
+			in.getline(buffer,100);  
+			str = buffer;
 			tag.push_back(str); 
 		}
-
-		cout << "请输入第" << i << "个有几个常规活动时间：" << endl;
-		cin >> num_routine;
+		in.getline(buffer,100);  
+		num_routine = atoi(buffer);
 		
 		for(j = 0;j < num_routine;j++)
 		{
-			cout << "请输入第" << i << "个部门第" << j << "个常规活动时间：" << endl;
-			cin >> str;
+			in.getline(buffer,100);  
+			str = buffer;
 			routine.push_back(str); 
 		}
 
@@ -204,6 +206,7 @@ void set_Department()
 		tag.clear();
 		routine.clear();
 	}
+	in.close();
 	
 }
 
@@ -218,35 +221,43 @@ void set_Student()
 	int j;
 	string str;
 	string str1;
+
+	ifstream in;
+	char buffer[256]; 
+	in.open("student_input.txt");
+
+
 	for(int i = 0;i < N_student;i++)
 	{
-		cout << "请输入第" << i << "个学生的学号：" << endl;
-		cin >> str1;
-		cout << "请输入第" << i << "个学生的学分绩点：" << endl;
-		cin >> grade;
-		cout << "请输入第" << i << "个学生的意愿部门个数：" << endl;
-		cin >> num_sdt_dpt;
+		in.getline(buffer,100);  
+		str = atoi(buffer);//学号
+		in.getline(buffer,100);  
+		grade = atof(buffer);//学分绩点
+		in.getline(buffer,100);  
+		num_sdt_dpt = atoi(buffer);//意愿部门个数
+
 		for(j = 0;j < num_sdt_dpt;j++)
 		{
-			cout << "请输入第" << i << "个学生第" << j << "个意愿部门：" << endl;
-			cin >> str;
+			in.getline(buffer,100);  
+			str = buffer;//意愿部门个数
 			sdt_dpt.push_back(str);
 		}
-		cout << "请输入第" << i << "个学生的兴趣标签个数：" << endl;
-		cin >> num_interest;
+		in.getline(buffer,100);  
+		num_interest = atoi(buffer);//兴趣标签个数
 		for(j = 0;j < num_interest;j++)
 		{
-			cout << "请输入第" << i << "个学生第" << j << "个兴趣标签：" << endl;
-			cin >> str;
+			in.getline(buffer,100);  
+			str = buffer;//兴趣标签
 			interest.push_back(str);
 		}
 
-		cout << "请输入第" << i << "个学生的空闲时间段个数：" << endl;
-		cin >> num_free_time;
+		in.getline(buffer,100);  
+		num_free_time = atoi(buffer);//空闲时间个数
+
 		for(j = 0;j < num_free_time;j++)
 		{
-			cout << "请输入第" << i << "个学生第" << j << "个空闲时间段：" << endl;
-			cin >> str;
+			in.getline(buffer,100);  
+			str = buffer;//空闲时间段
 			free_time.push_back(str);
 		}
 
@@ -258,6 +269,7 @@ void set_Student()
 		free_time.clear();
 
 	}
+	in.close();
 
 }
 
