@@ -166,7 +166,7 @@ void set_Department()
 	int j;
 	ifstream in;
 	char buffer[256]; 
-	in.open("department_input.txt");
+	in.open("import_department.txt");
 	for(int i = 0;i < N_department;i++)
 	{
 		in.getline(buffer,100);
@@ -214,7 +214,7 @@ void set_Student()
 
 	ifstream in;
 	char buffer[256]; 
-	in.open("student_input.txt");
+	in.open("import_student.txt");
 
 
 	for(int i = 0;i < N_student;i++)
@@ -377,7 +377,7 @@ void outputDepartment()
 	vector<string> vec_id;
 
 	ofstream out;
-	out.open("result.txt");
+	out.open("output_condition.txt");
 
 	for(i = 0;i < N_department;i++)
 	{

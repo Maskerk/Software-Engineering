@@ -31,7 +31,7 @@ void departRandom()
 	vector<string> vec_interest,vec_routine;
 	vector<string>::iterator itr;
 	ofstream out;
-	out.open("department_input.txt");
+	out.open("import_department.txt");
 
 	for(l = 0;l < N_department;l++)
 	{
@@ -119,7 +119,7 @@ void studentRandom()
 							"part9","part10","part11","part12","part13","part14","part15",
 							"part16","part17","part18","part19"};
 	ofstream out;
-	out.open("student_input.txt");
+	out.open("import_student.txt");
 	for(j = 0;j < N_student;j++)
 	{
 		//生成七位数学号
