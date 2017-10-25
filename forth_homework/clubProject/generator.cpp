@@ -129,7 +129,7 @@ void studentRandom()
 			id = rand() % 10000000;
 		}
 		//生成绩点
-		grade = (rand() % 50) / 2.8;
+		grade = (rand() % 70) / 3.486;
 		num_will_part = 0;//随机5个以内志愿部门
 		while(num_will_part < n_will_part_low)
 		{
@@ -191,7 +191,6 @@ void studentRandom()
 				}
 				else	vec_free.push_back(route);
 			}
-			
 		}	
 
 		out << id << '\n';

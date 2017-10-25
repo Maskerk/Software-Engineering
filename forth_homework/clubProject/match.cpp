@@ -30,8 +30,6 @@ public:
 
 		for(iter = routine.begin();iter!=routine.end();iter++)
 			this->routine.push_back(*iter);
-
-		//num_stu_in_part++;
 	}
 
 	bool addStu(string id)
@@ -57,11 +55,6 @@ public:
 	{
 		return num_stu;
 	}
-
-	// void addStuNum()
-	// {
-	// 	num_stu_in_part++;
-	// }
 
 	string getParName()
 	{
@@ -151,10 +144,9 @@ public:
 	}
 private:
 	float grade;//绩点
-	int num_depart = 0;//////////////////////////////////
+	int num_depart = 0;
 	int num_free_time,num_sdt_dpt = 0;
 	vector<string> interest;
-	//vector<Department> sdt_dpt;//学生选择部门
 	vector<string> sdt_dpt;//学生选择部门
 	vector<string> free_time;//空余时间段
 	string id;
@@ -204,12 +196,6 @@ void set_Department()
 		part[i] = new Department(name_part,top_limit,tag,routine);
 		tag.clear();
 		routine.clear();
-
-		// vector<string> id;
-
-		// id = part[i]->getParName();
-		// cout << "id.size():" << id.size() << endl;
-
 	}
 	in.close();
 }
@@ -304,10 +290,8 @@ void matchFree()
 		for(iter = sdt_dpt->begin();iter != sdt_dpt->end();)
 		{
 			if(begin_flag) begin_flag = 0;
-			//cout << "总共志愿-----------------------------" << pos2++ << endl;
 			 for(k = 0;k < N_department;k++)
 			 {
-				//if(*iter == "123")
 			 	if( *iter == part[k]->getParName())//如果意愿部门就是该部门
 			 	{
 					 routine = part[k]->getRoutine();
@@ -317,12 +301,10 @@ void matchFree()
 						iter2 = find(free_time.begin(),free_time.end(),*iter3);
 						if(iter2 != free_time.end())//在空余时间段中
 						{
-							//cout << "录取志愿--------------" << pos1++ << endl;
 							continue;//检查下一个例会片段
 						}
 						else//不在空余时间段中  排除该志愿
 						{
-							//cout << "排除该志愿" << pos++ << endl;
 							vector<string>::iterator iter_;
 							iter_ = iter;
 							if(iter == sdt_dpt->begin())	
@@ -338,10 +320,7 @@ void matchFree()
 								sdt_dpt->erase(iter_);
 								--iter;
 								break;
-							}
-
-							//++iter;
-							
+							}	
 						}
 					}
 			 	}
@@ -377,8 +356,6 @@ void byGrade()
 				{
 					if(part[j]->addStu(stu_i->getID()))//进入部门&&如果进入部门返回成功
 					{
-						//(stu_i->getSdtDpt)->erase(iter2);
-						//vec->erase(iter2);//删除该学生的该志愿
 						//查询下一个志愿
 						break;
 					}
@@ -397,41 +374,22 @@ void outputDepartment()
 	int i;
 	vector<string>::iterator id_iter;
 	vector<string> * vec_str;
+	vector<string> vec_id;
+
+	ofstream out;
+	out.open("result.txt");
+
 	for(i = 0;i < N_department;i++)
 	{
-		//cout << 123 << endl;
-		//id = part[i]->getID();
-		//cout << "id.size():" << id.size() << endl;
-		//cout << part[i]->getParName() << endl;
-		cout << "part" << i << "  :" << part[i]->getParStuNum() << endl;
-		// for(id_iter = id.begin();id_iter != id.end();id_iter++)
-		// {
-		// 	cout << *id_iter << endl;
-		// 	cout << 123 << endl;
-		// }
+		vec_id = part[i]->getID();
+		out << part[i]->getParName() << '\n';
+		for(id_iter = vec_id.begin();id_iter != vec_id.end();id_iter++)
+		{
+			out << *id_iter << "\t";
+		}
+		out << '\n';
 	}
-	for(i = 0;i < N_student;i++)
-	{
-		// vec_str = stu[i]->getSdtDpt();
-		// cout << stu[i]->getNumSdtDpt() << endl;
-		// for(id_iter = vec_str->begin();id_iter != vec_str->end();id_iter++)
-		// {
-
-		// 	cout << *id_iter << "  ";
-		// }
-		// cout << endl;
-
-
-		//cout << 123 << endl;
-		//id = part[i]->getID();
-		//cout << "id.size():" << id.size() << endl;
-		//cout << stu[i]->getID() << "--" << i << endl;
-		// for(id_iter = id.begin();id_iter != id.end();id_iter++)
-		// {
-		// 	cout << *id_iter << endl;
-		// 	cout << 123 << endl;
-		// }
-	}
+	out.close();
 }
 int main()
 {
