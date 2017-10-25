@@ -9,11 +9,13 @@ using namespace std;
 
 #define n_top_routine 3//例会片段上限 n_top_routine
 #define n_low_routine 1//例会片段下限 n_low_routine
-#define n_top_free 70//空闲片段上限 n_top_free
-#define n_low_free 40//空闲片段下限 n_low_free
+#define n_top_free 75//空闲片段上限 n_top_free
+#define n_low_free 72//空闲片段下限 n_low_free
 #define n_low_limit 12 //部门纳入人数下线
 #define n_top_limit	15//纳入部门人数上限
 
+#define n_will_part_top 5
+#define n_will_part_low 4
 
 #define N_department 20
 #define N_student 300
@@ -58,11 +60,11 @@ void departRandom()
 			}
 			
 		}
-		//num_free = rand() % 12;//0~11个常规活动时间
+		//num_free = rand() % 12;//常规活动时间
 		num_free = 0;
 		while(num_free < n_low_routine)
 		{
-			num_free = rand() % n_top_routine;
+			num_free = rand() % (n_top_routine+1);
 		}
 		for(i = 0;i < num_free;i++)
 		{
@@ -127,8 +129,12 @@ void studentRandom()
 			id = rand() % 10000000;
 		}
 		//生成绩点
-		grade = (rand() % 12) / 2.8;
-		num_will_part = rand() % 5;//随机5个以内志愿部门
+		grade = (rand() % 50) / 2.8;
+		num_will_part = 0;//随机5个以内志愿部门
+		while(num_will_part < n_will_part_low)
+		{
+			num_will_part = rand() % n_will_part_top;
+		}
 		for(i = 0;i < num_will_part;i++)
 		{
 			int random = rand() % 20;//part0~part19
@@ -166,7 +172,7 @@ void studentRandom()
 		num_free = 0;
 		while(num_free < rand() % n_low_free)
 		{
-			num_free = rand() % n_top_free ;
+			num_free = rand() % (n_top_free+1) ;
 		}
 
 		 for(i = 0;i < num_free;i++)
