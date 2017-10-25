@@ -7,6 +7,14 @@
 
 using namespace std;
 
+#define n_top_routine 3//例会片段上限 n_top_routine
+#define n_low_routine 1//例会片段下限 n_low_routine
+#define n_top_free 70//空闲片段上限 n_top_free
+#define n_low_free 40//空闲片段下限 n_low_free
+#define n_low_limit 12 //部门纳入人数下线
+#define n_top_limit	15//纳入部门人数上限
+
+
 #define N_department 20
 #define N_student 300
 
@@ -26,7 +34,11 @@ void departRandom()
 	for(l = 0;l < N_department;l++)
 	{
 		name_part = "part"+to_string(l);//部门名称 part0~partN
-		top_limit=rand() % 16;//随机上限 0~15
+		top_limit = 0;
+		while(top_limit < n_low_limit)
+		{
+			top_limit = rand() % (n_top_limit+1);
+		}
 		
 		num_interest = rand() % 5;//随机5个兴趣标签
 		for(i = 0;i < num_interest;i++)
@@ -46,7 +58,12 @@ void departRandom()
 			}
 			
 		}
-		num_free = rand() % 12;//0~11个常规活动时间
+		//num_free = rand() % 12;//0~11个常规活动时间
+		num_free = 0;
+		while(num_free < n_low_routine)
+		{
+			num_free = rand() % n_top_routine;
+		}
 		for(i = 0;i < num_free;i++)
 		{
 			int j = rand() % 7;
@@ -145,7 +162,13 @@ void studentRandom()
 				else	vec_interest.push_back(label_interest[random]);
 			}
 		 }
-		num_free = rand() % 12;//0~11个空余时间
+		//num_free = rand() % 12;//0~11个空余时间
+		num_free = 0;
+		while(num_free < rand() % n_low_free)
+		{
+			num_free = rand() % n_top_free ;
+		}
+
 		 for(i = 0;i < num_free;i++)
 		{
 			int j = rand() % 7;
