@@ -368,7 +368,6 @@ void byGrade()
 
 void outputDepartment()
 {
-
 	vector<string> id;
 	string part_name;
 	int i;

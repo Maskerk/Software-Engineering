@@ -123,10 +123,10 @@ void studentRandom()
 	for(j = 0;j < N_student;j++)
 	{
 		//生成七位数学号
-		id = rand() % 10000000;
-		while(id < 1000000 || id > 9999999)
+		id = rand() % 99999;
+		while(id < 10000 || id > 99999)
 		{
-			id = rand() % 10000000;
+			id = rand() % 99999;
 		}
 		//生成绩点
 		grade = (rand() % 70) / 3.486;
