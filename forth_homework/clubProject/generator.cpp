@@ -60,7 +60,6 @@ void departRandom()
 			}
 			
 		}
-		//num_free = rand() % 12;//常规活动时间
 		num_free = 0;
 		while(num_free < n_low_routine)
 		{
@@ -144,9 +143,7 @@ void studentRandom()
 				itr = find(vec_will_part.begin(),vec_will_part.end(),will_part[random]);//查询向量中有没有
 				if(itr != vec_will_part.end())//说明重复了
 				{
-					//cout << 999 << endl;
 					--i;
-					//continue;
 				}
 				else	vec_will_part.push_back(will_part[random]);
 			} 
@@ -168,7 +165,6 @@ void studentRandom()
 				else	vec_interest.push_back(label_interest[random]);
 			}
 		 }
-		//num_free = rand() % 12;//0~11个空余时间
 		num_free = 0;
 		while(num_free < rand() % n_low_free)
 		{

@@ -84,7 +84,6 @@ class Student
 public:
 	Student(){}
 	Student(string id,float grade,vector<string> interest,vector<string> sdt_dpt,vector<string> free_time)
-	//Student(id,grade,interest,sdt_dpt,free_time);
 	{
 		num_free_time = 0;
 		vector<string>::iterator iter_str;
@@ -120,7 +119,7 @@ public:
 	}
 	int getNumSdtDpt()
 	{
-		return sdt_dpt.size();/////////////////
+		return sdt_dpt.size();
 	}
 	void addDepart()
 	{
@@ -171,7 +170,6 @@ void set_Department()
 	{
 		in.getline(buffer,100);
 		name_part =  buffer;//部门名称
-		//cout << name_part << endl;
 		in.getline(buffer,100);  
 		top_limit = atoi(buffer);//人数上限
 		in.getline(buffer,100);  
@@ -200,6 +198,8 @@ void set_Department()
 	in.close();
 }
 
+vector<string> id_all;
+
 void set_Student()
 {
 	int num_interest,num_intest,num_sdt_dpt,num_free_time;
@@ -216,12 +216,13 @@ void set_Student()
 	char buffer[256]; 
 	in.open("import_student.txt");
 
-
 	for(int i = 0;i < N_student;i++)
 	{
 		in.getline(buffer,100);  
 		str = buffer;//学号
 		id = str;
+		id_all.push_back(id);
+
 		in.getline(buffer,100);  
 		grade = atof(buffer);//学分绩点
 		in.getline(buffer,100);  
@@ -257,10 +258,7 @@ void set_Student()
 
 		interest.clear();
 		sdt_dpt.clear();
-		free_time.clear();
-
-		
-
+		free_time.clear();	
 	}
 	in.close();
 
@@ -365,6 +363,8 @@ void byGrade()
 
 	}
 }
+vector<string> selected_stu;
+
 
 void outputDepartment()
 {
@@ -381,14 +381,56 @@ void outputDepartment()
 	for(i = 0;i < N_department;i++)
 	{
 		vec_id = part[i]->getID();
-		out << part[i]->getParName() << '\n';
+		out << part[i]->getParName() << ":" << '\n';
 		for(id_iter = vec_id.begin();id_iter != vec_id.end();id_iter++)
 		{
 			out << *id_iter << "\t";
+			selected_stu.push_back(*id_iter);
 		}
-		out << '\n';
+		out << "\n\n";
 	}
+
+	out << "\n";
+	
 	out.close();
+}
+
+void outputNoSelStu()
+{
+
+	ofstream out;
+	out.open("output_condition.txt",ios::app);
+	vector<string>::iterator iter1,iter2;
+
+	out << "未被分配的学生：" << "\n";
+
+	for(iter1 = id_all.begin();iter1 != id_all.end();iter1++)
+	{
+		iter2 = find(selected_stu.begin(),selected_stu.end(),*iter1);
+		if(iter2 == selected_stu.end())
+		{
+			out << *iter1 << "\t";
+		}
+	}
+	out << "\n\n";
+	out.close();
+}
+
+void outputNoSelPrt()
+{
+	ofstream out;
+	out.open("output_condition.txt",ios::app);
+
+	out << "未被分配的部门：" << "\n";
+
+	for(int i = 0;i < N_department;i++)
+	{
+		if(part[i]->getParStuNum() == 0)
+			out << "part" << to_string(i) << '\n';
+	}
+	out << "\n\n";
+	out.close();
+
 }
 int main()
 {
@@ -397,5 +439,7 @@ int main()
 	matchFree();
 	byGrade();
 	outputDepartment();
+	outputNoSelStu();
+	outputNoSelPrt();
 	return 0;
 }
